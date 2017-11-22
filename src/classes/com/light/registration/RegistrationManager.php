@@ -16,10 +16,12 @@ class RegistrationManager {
     //put your code here
     public function testRegister(string $username, string $password, string $principal): bool {
         $success = false;
-        $sql = new SQLConnection(SQLConnection::MYSQL, "users", "joe");
+        $sql = new SQLConnection(SQLConnection::MYSQL,"admin_users","admin_joe");
+//        $sql->setTableName("admin_users");
+        $con=$sql->getDbConnection("admin_joe");
         $sql->is_mysql_table_information();
         $query = $sql->get_mysql_insert();
-        $con = $sql->getDbConnection();
+        //$con = $sql->getDbConnection();
         if (!($stmt = $con->prepare($query))) {
             throw new \Exception($stmt->error);
         }

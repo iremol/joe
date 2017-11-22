@@ -74,7 +74,7 @@ class SQLConnection {
     /**
      * creates a connection to the MSSQL OR POSTGRES OR MYSQL database server.
      */
-    private function connect() {
+    private function connect(string $dbname = "") {
         if ($this->dbServerBrand == self::POSTGRES) {
             $this->dbConn = pg_connect("host=localhost dbname=npdcbi user=npdcbi password=Passw0rd")
                     or die('Could not connect: ' . pg_last_error());
@@ -84,8 +84,12 @@ class SQLConnection {
             //$connectionInfo = array("Database" => "NPDCBI", "UID" => "biadmin", "PWD" => "PARA123key","ReturnDatesAsStrings"=>true);
             $connectionInfo = array("Database" => "npdcbi", "UID" => "SA", "PWD" => "Passw0rd", "ReturnDatesAsStrings" => true);
             $this->dbConn = sqlsrv_connect($serverName, $connectionInfo) or print_r(sqlsrv_errors());
-        } elseif ($this->dbServerBrand == self::MYSQL) {
-            $this->dbConn = new \mysqli(MySQLDbConfig::DBHOST, MySQLDbConfig::DBUSER, MySQLDbConfig::DBPASS, MySQLDbConfig::DBNAME);
+        } elseif (($this->dbServerBrand == self::MYSQL)) {
+            if ($dbname === "") {
+                $this->dbConn = new \mysqli(MySQLDbConfig::DBHOST, MySQLDbConfig::DBUSER, MySQLDbConfig::DBPASS, MySQLDbConfig::DBNAME);
+            } else {
+                $this->dbConn = new \mysqli(MySQLDbConfig::DBHOST, MySQLDbConfig::DBUSER, MySQLDbConfig::DBPASS, $dbname);
+            }
             if ($this->dbConn->connect_errno) {
                 throw new \Exception("MySQL Error: " . $this->dbConn->connect_error);
             }
@@ -177,10 +181,9 @@ class SQLConnection {
         while ($line = $result->fetch_assoc()) {
             if ($line["COLUMN_NAME"] == "ibdid") {
                 continue;
-            }else if($line["COLUMN_NAME"] == "irid"){
+            } else if ($line["COLUMN_NAME"] == "irid") {
                 continue;
-            } 
-            else {
+            } else {
                 $this->fieldTypeArray[$counter] = $line["DATA_TYPE"]; // . PHP_EOL;
                 $this->fieldNameArray[$counter] = $line["COLUMN_NAME"]; // . PHP_EOL;
                 $counter++;
@@ -261,11 +264,12 @@ class SQLConnection {
         $queryString .= ")";
         return $queryString;
     }
-    
-    private function build_mysql_select_all(){
+
+    private function build_mysql_select_all() {
         $queryString = "select * from $this->schema.$this->tableName";
         return $queryString;
     }
+
     /**
      * shows the generated insert statement - debugging purpose only
      */
@@ -276,16 +280,23 @@ class SQLConnection {
     public function get_mysql_insert() {
         return $this->build_mysql_insert();
     }
-    public function get_mysql_select_all(){
+
+    public function get_mysql_select_all() {
         return $this->build_mysql_select_all();
     }
 
-    public function getDbConnection() {
+    public function getDbConnection(string $dbname = "") {
         if (!$this->dbConn == NULL) {
             return $this->dbConn;
         } else {
-            $this->connect();
-            return $this->dbConn;
+            if ($dbname === "") {
+                $this->connect();
+                return $this->dbConn;
+            }
+            else{
+                $this->connect($dbname);
+                return $this->dbConn;
+            }
         }
     }
 
@@ -295,8 +306,8 @@ class SQLConnection {
      * @param type $keyColumn
      * @param type $key
      */
-    public function getTableData($keyColumn, $key): array {
-        $this->connect();
+    public function getTableData($keyColumn, $key,$dbname=""): array {
+        $this->connect($dbname);
         $query = "select * from $this->schema.$this->tableName where $keyColumn='$key'";
         $result = $this->dbConn->query($query);
         $row = "";

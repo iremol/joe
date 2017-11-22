@@ -25,7 +25,7 @@ class Referral extends Person{
     private $sponsorUserName;
     private $stage;
     
-    public function __construct(PublicCredential $publicc,PrivateCredential $privatec,string $stage,string $sponsorUserName=null, BioData $bioData=null,Account $account = null) {
+    public function __construct(PublicCredential $publicc,PrivateCredential $privatec,string $stage=null,string $sponsorUserName=null, BioData $bioData=null,Account $account = null) {
         parent::__construct($publicc, $privatec, $bioData);
         $this->stage = $stage;
         $this->account = $account;
@@ -49,7 +49,9 @@ class Referral extends Person{
     }
 
     public function getStage():string {
-        return $this->stage;
+        return Stage::getStage($this->getPublicCredentials()->getValue());
+        //return $this->stage;
+        
     }
 
 }

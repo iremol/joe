@@ -14,11 +14,15 @@ namespace com\light\stage;
  * @author Imole Akpobome
  */
 //require_once 'Bonus.php';
-class DiamondBonus implements Bonus{
+class DiamondBonus implements Bonus {
+
     //put your code here
-    
+    const DOWNLINE = 1536;
+
     public function getBonus(): float {
-        
+         $stepout = self::STEPOUT * self::DOWNLINE;
+        $matrix = (self::INVESTMENT * self::DOWNLINE) * self::MATRIX;
+        return $stepout + $matrix;
     }
 
 }

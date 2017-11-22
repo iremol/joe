@@ -20,7 +20,8 @@ use com\light\util\ReferralDisplayManager;
  */
 class Stage {
 
-    const ID = ["FEEDER", "BRONZE", "SILVER", "GOLD", "DIAMOND"];
+    const ID = ["FEEDER","BRONZE", "SILVER", "GOLD", "DIAMOND","END"];
+    const BONUS_ID = ["BRONZE", "SILVER", "GOLD", "DIAMOND","END"];
 
     /**
      * @method constructor __construct(string $id) The constructor returns
@@ -53,6 +54,62 @@ class Stage {
                 break;
         }
     }
+    
+    public static function getBonus(string $id){
+         /* performs a search of id in the array and returns key if found
+         * else it returns false.
+         */
+        $key = array_search(strtoupper($id), Stage::BONUS_ID);
+        if ($key === FALSE) {
+            throw new \Exception("Error: There is a problem with the stage", "100");
+        }
+        switch ((int) $key) {
+            case 0:
+                echo "FeederBonus";
+                return (new FeederBonus())->getBonus();
+                
+            case 1:
+                echo "BronzeBonus";
+                return (new BronzeBonus())->getBonus();
+                
+            case 2:
+                echo "SilverBonus";
+                return (new SilverBonus())->getBonus();
+                
+            case 3:
+                echo "GoldBonus";
+                return (new GoldBonus())->getBonus();
+            case 4:
+                echo "DiamondBonus";
+                return (new DiamondBonus())->getBonus();
+        }
+    }
+    
+     public static function getReward(string $id){
+         /* performs a search of id in the array and returns key if found
+         * else it returns false.
+         */
+        $key = array_search(strtoupper($id), Stage::BONUS_ID);
+        if ($key === FALSE) {
+            throw new \Exception("Error: There is a problem with the stage", "100");
+        }
+        switch ((int) $key) {
+            case 0:
+                return Reward::feederReward();
+                
+            case 1:
+                return Reward::bronzeReward();
+                
+            case 2:
+                return Reward::silverReward();
+                
+            case 3:
+                return Reward::goldReward();
+                
+            case 4:
+                return Reward::diamonReward();
+        }
+    }
 
     /**
      * @name loadStage
@@ -74,7 +131,10 @@ class Stage {
         }
         elseif(($count >= 255) &&($count<1023)){
             return Stage::ID[4];
-        } 
+        }
+        elseif(($count >=1023)&& ($count<=4095)){
+            return Stage::ID[5];
+        }
         else {
             return "Not a valid Stage";
         }
@@ -145,6 +205,5 @@ class Stage {
         $users = [$username];
         $count = Stage::checkStage($users, $gendata, $determinant, $counter, $counter2, $counter3);
         return Stage::loadStage($count);
-    }
-
+    }    
 }

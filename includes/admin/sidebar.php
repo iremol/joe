@@ -17,11 +17,11 @@ use com\light\stage\Stage;
 use com\light\registration\Referral;
 use com\light\sql\SQLConnection;
 
-if (!isset($_SESSION["user"])) {
-    header("Location: ../../index.php");
+if (!isset($_SESSION["admin"])) {
+    header("Location: admin_login.php");
 }
 
-$subject = $_SESSION["user"];
+$subject = $_SESSION["admin"];
 $ref = new Referral($subject->getPublicCred(), $subject->getPrivateCred(), "");
 $sql = new SQLConnection(SQLConnection::MYSQL, "referral", "joe");
 $con = $sql->getDbConnection();
@@ -80,22 +80,23 @@ if (strlen($Msg) > 0) {
 <div id='sidenav'>
     <ul>
         <li style="background-color: #333; color:#eee">User: <?= $subject->getPublicCred()->getValue() ?></li>
-        <li style="background-color: #666; color:yellow"><?= $ref->getStage() ?></li>
-        <li class="c"><a href='../../userprofile.php'>Dashboard</a></li>
-        <!--<a href='#'>--><li onfocus="document.getElementById('submenu1').style.display = 'block'" onmouseover="document.getElementById('submenu1').style.display = 'block'" onmouseout="document.getElementById('submenu1').style.display = 'none'"><a href="#">Profile</a>
+        <!--<li style="background-color: #666; color:yellow"><?= $ref->getStage() ?></li>-->
+<!--        <li class="c"><a href='../../userprofile.php'>Dashboard</a></li>
+        <a href='#'><li onfocus="document.getElementById('submenu1').style.display = 'block'" onmouseover="document.getElementById('submenu1').style.display = 'block'" onmouseout="document.getElementById('submenu1').style.display = 'none'"><a href="#">Profile</a>
             <ul id="submenu1" style="display:none">
                 <li class="c"><a href="../../viewprofile.php">View Profile</a></li>
                 <li id="li1" class="c"><a  href="../../changepass.php">Change Password</a></li> 
                 <li class="c"><a href="../../changeaccount.php">Change Account</a></li> 
                 <li class="c"><a href="../../changemobile.php">Change Phone</a></li> 
             </ul>
-        </li><!--</a>-->
-        <li class="c"><a href='../../src/testviewreferral.php'>Referrals</a></li>
-        <li class="c"><a href='../../earnings.php'>My Pending Earnings</a></li>
-        <li class="c"><a href='#'>User Account</a></li>
-        <li class="c"><a href='../../testify.php'>Add Testimony</a></li>
-        <li class="c"><a href='#'>Notification</a></li>
-        <li class="c"><a href='#'>Support</li></a>
+        </li></a>-->
+        <!--<li class="c"><a href='../../src/testviewreferral.php'>Referrals</a></li>-->
+        <!--<li class="c"><a href='../../earnings.php'>My Pending Earnings</a></li>-->
+        <!--<li class="c"><a href='#'>User Account</a></li>-->
+        <!--<li class="c"><a href='../../testify.php'>Add Testimony</a></li>-->
+        <!--<li class="c"><a href='#'>Notification</a></li>-->
+        <li class="c"><a href='../../src/admin/request_viewer.php'>View Requests</a></li>
+        <li class="c"><a href='../../src/admin/pay_confirm.php'>Confirm Payment</a></li>
         <li class="c"><a href='../../src/logout.php'>Logout</a></li>
     </ul>
 </div>

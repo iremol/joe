@@ -16,8 +16,11 @@ namespace com\light\stage;
 require_once 'Bonus.php';
 class SilverBonus implements Bonus{
     //put your code here
+    const DOWNLINE = 96;
     public function getBonus(): float {
-        
+         $stepout = self::STEPOUT * self::DOWNLINE;
+        $matrix = (self::INVESTMENT * self::DOWNLINE) * self::MATRIX;
+        return $stepout + $matrix;
     }
 
 }

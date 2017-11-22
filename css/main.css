@@ -129,6 +129,7 @@ body{
     /*padding:5px 20px 5px 20px;*/
 }
 #content{
+
 }
 #content h2{
     text-align: left;
@@ -312,7 +313,7 @@ input[class^=edit]{
     display:inline;
     margin:0px;
     padding:5px 40px;
-    background-color:green;
+    background-color:darkgreen;
     border:none;
     color:white;
 }
@@ -320,11 +321,55 @@ input[class^=edit]{
     display:inline;
     margin:0px;
     padding:5px 40px;
-    background-color:blue;
+    background-color:darkblue;
     border:none;
     color:white;
 }
 #content li {
     border-bottom: #333 thin solid;
     cursor: pointer;
+}
+/*table,tr,td,th{
+    border:#333 solid thin;
+    text-align: left;
+    color: white;
+    font-size: large;
+    background-color: darkgreen;
+}
+.table1{
+    padding:15px;
+}
+td,th{
+    padding-right:50px;
+    padding-bottom: 20px;
+}*/
+
+button{
+    border:none;
+    background-color: green;
+    color: #ffffff;
+    padding:10px 30px;
+    font-weight: bolder;
+    cursor:pointer;
+}
+.admintable {
+    /*background-color: white;*/
+    padding:5px;
+    border-collapse: collapse;
+    width:auto;
+}
+
+.admintable td,th{
+    /*background-color: white;*/
+    color:gray;
+    border: .1px solid #ccc;
+    /*border-collapse: collapse;*/
+    padding:10px;
+}
+
+.admintable tr:nth-child(even) {
+    background-color: #fff;
+}
+.admintable tr:nth-child(odd) {
+    background-color:#eee;
 }

@@ -12,15 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/root/NetBeansProjects/joe/src/testviewreferral.php</file>
-            <file>file:/root/NetBeansProjects/joe/includes/user/profile.php</file>
-            <file>file:/root/NetBeansProjects/joe/src/classes/com/light/stage/Stage.php</file>
-            <file>file:/root/NetBeansProjects/joe/src/classes/com/light/registration/Referral.php</file>
-            <file>file:/root/NetBeansProjects/joe/src/classes/com/light/user/ProfileManager.php</file>
-            <file>file:/root/NetBeansProjects/joe/src/testregistration.php</file>
-            <file>file:/root/NetBeansProjects/joe/css/main.css</file>
-            <file>file:/root/NetBeansProjects/joe/js/main_.js</file>
-            <file>file:/root/NetBeansProjects/joe/src/classes/com/light/util/ReferralDisplayManager.php</file>
+            <file>file:/root/NetBeansProjects/joe/src/admin/confirm_pay.php</file>
+            <file>file:/root/NetBeansProjects/joe/earnings.php</file>
+            <file>file:/root/NetBeansProjects/joe/src/admin/ref_viewer.php</file>
+            <file>file:/root/NetBeansProjects/joe/includes/user/sidebar.php</file>
         </group>
     </open-files>
 </project-private>

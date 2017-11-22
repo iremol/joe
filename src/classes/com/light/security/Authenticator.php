@@ -45,6 +45,28 @@ class Authenticator {
         return $subject;
     }
 
+     public function validate_admin(string $username, string $password): Subject {
+//        $success = false;
+        $subject = null;
+        $sql = new SQLConnection(SQLConnection::MYSQL);
+        $sql->setTableName('admin_users');
+        try {
+            $row = $sql->getTableData("vusername", $username,"admin_joe");
+        } catch (\Exception $e) {
+            throw $e;
+        }
+        if ($row) {
+            if (password_verify($password, $row['vpassword'])) {
+//                $success = true;
+                $subject = $this->allocate($row);
+            }
+        }
+        if($subject == null){
+            throw new \Exception("Wrong username or password");
+        }
+        return $subject;
+    }
+    
     private function allocate($row): Subject {
         $subject = new Subject();
         $subject->setPublicCred(new PublicCredential($row["vusername"]));
